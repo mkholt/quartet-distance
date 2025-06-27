@@ -5,18 +5,18 @@
 
 CountingLinkedList CountingLinkedList::dummyLL = CountingLinkedList(true);
 
+#define HDTFactorySize 30
+
 HDTFactory::HDTFactory(int numD, HDTFactory *copyMemAllocFrom)
 {
-	INC_RUNTIME_COUNTER
-	this->size = 30;
 	this->numD = numD;
 
 	if (copyMemAllocFrom == NULL)
 	{
-		memHDT = new MemoryAllocator<HDT>(size+1);
-		memCLL = new MemoryAllocator<CountingLinkedList>(size+1);
-		memCLLNO = new MemoryAllocator<CountingLinkedListNumOnly>(size+1);
-		memTLL = new MemoryAllocator<TemplatedLinkedList<HDT*> >(size+1);
+		memHDT = new MemoryAllocator<HDT>(HDTFactorySize+1);
+		memCLL = new MemoryAllocator<CountingLinkedList>(HDTFactorySize+1);
+		memCLLNO = new MemoryAllocator<CountingLinkedListNumOnly>(HDTFactorySize+1);
+		memTLL = new MemoryAllocator<TemplatedLinkedList<HDT*> >(HDTFactorySize+1);
 	}
 	else
 	{
@@ -53,7 +53,6 @@ HDTFactory::HDTFactory(int numD, HDTFactory *copyMemAllocFrom)
 
 HDTFactory::~HDTFactory()
 {
-	INC_RUNTIME_COUNTER
 	{
 		HDT *current = createdHDTs;
 		while (current != NULL)
@@ -118,8 +117,7 @@ void HDTFactory::deleteTemplatedLinkedList()
 
 HDT* HDTFactory::getHDT(HDT::NodeType type, RootedTree *link, bool doLink)
 {
-	INC_RUNTIME_COUNTER
-	if (hdtLocation > size)
+	if (hdtLocation > HDTFactorySize)
 	{
 		currentHDT->left = memHDT->getMemory();;
 		currentHDT = currentHDT->left;
@@ -136,8 +134,7 @@ HDT* HDTFactory::getHDT(HDT::NodeType type, RootedTree *link, bool doLink)
 
 CountingLinkedList* HDTFactory::getLL()
 {
-	INC_RUNTIME_COUNTER
-	if (llLocation > size)
+	if (llLocation > HDTFactorySize)
 	{
 		currentLL->next = memCLL->getMemory();;
 		currentLL = currentLL->next;
@@ -153,8 +150,7 @@ CountingLinkedList* HDTFactory::getLL()
 
 CountingLinkedListNumOnly* HDTFactory::getLLNO()
 {
-	INC_RUNTIME_COUNTER
-	if (llnoLocation > size)
+	if (llnoLocation > HDTFactorySize)
 	{
 		currentLLNO->next = memCLLNO->getMemory();
 		currentLLNO = currentLLNO->next;
@@ -170,8 +166,7 @@ CountingLinkedListNumOnly* HDTFactory::getLLNO()
 
 TemplatedLinkedList<HDT*>* HDTFactory::getTemplatedLinkedList()
 {
-	INC_RUNTIME_COUNTER
-	if (currentLocationTLL > size)
+	if (currentLocationTLL > HDTFactorySize)
 	{
 		currentTLL->next = memTLL->getMemory();
 		currentTLL = currentTLL->next;
@@ -227,8 +222,8 @@ long long HDTFactory::getSizeInRam()
 		}
 	}
 
-	return resultHDT * (size+1) * sizeof(HDT) +
-		resultLL * (size+1) * sizeof(CountingLinkedList) +
-		resultLLNO * (size+1) * sizeof(CountingLinkedListNumOnly) +
-		resultTLL * (size+1) * sizeof(TemplatedLinkedList<HDT*>);
+	return resultHDT * (HDTFactorySize+1) * sizeof(HDT) +
+		resultLL * (HDTFactorySize+1) * sizeof(CountingLinkedList) +
+		resultLLNO * (HDTFactorySize+1) * sizeof(CountingLinkedListNumOnly) +
+		resultTLL * (HDTFactorySize+1) * sizeof(TemplatedLinkedList<HDT*>);
 }

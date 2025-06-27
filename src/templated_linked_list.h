@@ -2,9 +2,6 @@
 #define TEMPLATED_LINKED_LIST
 
 #include <iostream>
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
 
 using namespace std;
 

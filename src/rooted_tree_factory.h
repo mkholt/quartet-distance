@@ -3,10 +3,6 @@
 #include "rooted_tree.h"
 #include "memory_allocator.h"
 
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
-
 class RootedTreeFactory
 {
 	private:

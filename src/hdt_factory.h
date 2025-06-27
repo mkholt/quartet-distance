@@ -5,10 +5,6 @@ class RootedTree; // forward declaration
 class CountingLinkedList; // forward declaration
 class CountingLinkedListNumOnly; // forward declaration
 
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
-
 class HDTFactory
 {
 	private:
@@ -21,7 +17,6 @@ class HDTFactory
 		TemplatedLinkedList<HDT*> *createdTLL;
 		TemplatedLinkedList<HDT*> *currentTLL;
 		int hdtLocation, llLocation, llnoLocation, currentLocationTLL;
-		int size;
 		int numD;
 		MemoryAllocator<HDT> *memHDT;
 		MemoryAllocator<CountingLinkedList> *memCLL;

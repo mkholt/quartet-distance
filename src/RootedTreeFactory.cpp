@@ -4,7 +4,6 @@
 
 RootedTreeFactory::RootedTreeFactory(RootedTreeFactory *copyMemAllocFrom)
 {
-	INC_RUNTIME_COUNTER
 	this->size = 30;
 
 	if (copyMemAllocFrom == NULL)
@@ -32,7 +31,6 @@ RootedTreeFactory::RootedTreeFactory(RootedTreeFactory *copyMemAllocFrom)
 
 RootedTreeFactory::~RootedTreeFactory()
 {
-	INC_RUNTIME_COUNTER
 	{
 		RootedTree *current = createdRT;
 		while (current != NULL)
@@ -60,7 +58,6 @@ RootedTreeFactory::~RootedTreeFactory()
 
 RootedTree* RootedTreeFactory::getRootedTree(string name)
 {
-	INC_RUNTIME_COUNTER
 	if (currentLocationRT > size)
 	{
 		currentRT->altWorldSelf = memRT->getMemory();
@@ -78,7 +75,6 @@ RootedTree* RootedTreeFactory::getRootedTree(string name)
 
 TemplatedLinkedList<RootedTree*>* RootedTreeFactory::getTemplatedLinkedList()
 {
-	INC_RUNTIME_COUNTER
 	if (currentLocationTLL > size)
 	{
 		currentTLL->next = memTLL->getMemory();

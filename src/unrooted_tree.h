@@ -6,9 +6,6 @@
 #include <string>
 #include "rooted_tree.h"
 #include "rooted_tree_factory.h"
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
 
 using namespace std;
 

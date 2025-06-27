@@ -10,10 +10,6 @@
 class HDT;// Forward declaration...
 class RootedTreeFactory; // Forward declaration...
 
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
-
 using namespace std;
 
 class RootedTree
@@ -32,19 +28,11 @@ class RootedTree
 
 		RootedTreeFactory *factory;
 
-		// Soda13 counting stuff
-		INTTYPE_REST p_d;
-		INTTYPE_REST t_d;
-		INTTYPE_REST unresolvedTriplets;
-		INTTYPE_N4 q_d;
-		INTTYPE_N4 unresolvedQuartetsHelper;
+		// How many leaves beneath you?
 		int n;
 
-		RootedTree();
 		void initialize(string name);
 		bool isLeaf();
-		static unsigned int max(RootedTree *t1, RootedTree *t2, RootedTree *t3);
-		static unsigned int max(RootedTree *t1, RootedTree *t2, RootedTree *t3, RootedTree *t4);
 		void addChild(RootedTree *t);
 		RootedTree* getParent();
 		INTTYPE_REST getUnresolvedTriplets();

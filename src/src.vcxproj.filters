@@ -21,15 +21,6 @@
     <ClCompile Include="NewickParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OutputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nvwa\debug_new.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NaiveImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Soda13Impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,9 +34,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RootedTreeFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Stopwatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HDTCountingLeaf.cpp">
@@ -74,9 +62,6 @@
     <ClInclude Include="newick_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="output_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rooted_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,16 +71,10 @@
     <ClInclude Include="quartet_calc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="naive_calc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="soda13_calc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hdt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fancy_time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="util.h">
@@ -105,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rooted_tree_factory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stopwatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="counting_linked_list.h">

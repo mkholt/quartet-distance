@@ -41,7 +41,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalOptions>-DquartetsToo -DdoExtractAndContract -DCONTRACT_MAX_EXTRA_SIZE=20000 -DcalcE %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-DquartetsToo -DdoExtractAndContract -DCONTRACT_MAX_EXTRA_SIZE=20000 -DcalcE -DdoCounter -DdoStopwatch -DdoCompactStopWatch -DquartetsNoSwap %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -71,30 +71,22 @@
     <ClCompile Include="HDTFactory.cpp" />
     <ClCompile Include="HDTListUtils.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NaiveImpl.cpp" />
     <ClCompile Include="NewickParser.cpp" />
-    <ClCompile Include="nvwa\debug_new.cpp" />
-    <ClCompile Include="OutputHandler.cpp" />
     <ClCompile Include="RootedTree.cpp" />
     <ClCompile Include="RootedTreeFactory.cpp" />
     <ClCompile Include="Soda13Impl.cpp" />
-    <ClCompile Include="Stopwatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="counting_linked_list_num_only.h" />
-    <ClInclude Include="fancy_time.h" />
     <ClInclude Include="hdt.h" />
     <ClInclude Include="hdt_factory.h" />
     <ClInclude Include="counting_linked_list.h" />
     <ClInclude Include="memory_allocator.h" />
-    <ClInclude Include="naive_calc.h" />
     <ClInclude Include="newick_parser.h" />
-    <ClInclude Include="output_handler.h" />
     <ClInclude Include="quartet_calc.h" />
     <ClInclude Include="rooted_tree.h" />
     <ClInclude Include="rooted_tree_factory.h" />
     <ClInclude Include="soda13_calc.h" />
-    <ClInclude Include="stopwatch.h" />
     <ClInclude Include="templated_linked_list.h" />
     <ClInclude Include="triplet_calc.h" />
     <ClInclude Include="unrooted_tree.h" />

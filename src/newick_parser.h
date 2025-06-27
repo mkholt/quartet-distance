@@ -3,9 +3,6 @@
 
 	#include <string>
 	#include "unrooted_tree.h"
-	#ifdef _DEBUG
-		#include "nvwa/debug_new.h"
-	#endif
 
 	using namespace std;
 

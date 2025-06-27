@@ -5,16 +5,8 @@
 #include "counting_linked_list.h"
 #include "soda13_calc.h"
 
-//#define beParanoid
-
-HDT::HDT()
-{
-	INC_RUNTIME_COUNTER
-}
-
 void HDT::initialize(CountingLinkedList *countingVars, NodeType type, int numD, RootedTree *link, bool doLink)
 {
-	INC_RUNTIME_COUNTER
 	parent = childParent = left = right = NULL;
 	children = NULL;
 	convertedFrom = NotConverted;
@@ -24,20 +16,9 @@ void HDT::initialize(CountingLinkedList *countingVars, NodeType type, int numD, 
 #ifdef quartetsToo
 	quartResolvedAgree = 0;
 	quartResolvedAgreeDiag = 0;
-#ifndef calcE
-	quartResolvedDisagree = 0;
-	quartResolvedDisagreeDiag = 0;
-#endif
-#ifdef quartetsNoSwap
 	quartResolvedAgreeUpper = 0;
-#ifndef calcE
-	quartResolvedDisagreeUpper = 0;
-#endif
-#endif
-#ifdef calcE
 	// New sum for calculating E
 	quartSumE = 0;
-#endif
 #endif
 	up2date = altMarked = false;
 
@@ -53,14 +34,12 @@ void HDT::initialize(CountingLinkedList *countingVars, NodeType type, int numD, 
 
 INTTYPE_REST HDT::leafCount()
 {
-	INC_RUNTIME_COUNTER
 	if (countingVars->num == 0) return n_circ + countingVars->n_i;
 	return n_circ;
 }
 
 void HDT::mark()
 {
-	INC_RUNTIME_COUNTER
 	up2date = false;
 
 	if (parent == NULL || !parent->up2date) return;
@@ -69,7 +48,6 @@ void HDT::mark()
 
 void HDT::markAlternative()
 {
-	INC_RUNTIME_COUNTER
 	altMarked = true;
 
 	if (parent == NULL || parent->altMarked) return;
@@ -78,7 +56,6 @@ void HDT::markAlternative()
 
 void HDT::forceLinks()
 {
-	INC_RUNTIME_COUNTER
 	if (link != NULL)
 	{
 		link->hdtLink = this;
@@ -89,7 +66,6 @@ void HDT::forceLinks()
 
 RootedTree* HDT::extractAndGoBack(RootedTreeFactory *rtfactory)
 {
-	INC_RUNTIME_COUNTER
 	RootedTreeFactory *factory = new RootedTreeFactory(rtfactory);
 	extractAndGoBackImpl(NULL, factory);
 	return goBackVariable;
@@ -97,7 +73,6 @@ RootedTree* HDT::extractAndGoBack(RootedTreeFactory *rtfactory)
 
 RootedTree* HDT::extractAndGoBackImpl(RootedTree *addToMe, RootedTreeFactory *factory)
 {
-	INC_RUNTIME_COUNTER
 	if (this->convertedFrom == C && this->left == NULL && this->right == NULL)
 	{
 		if (link == NULL)
@@ -227,7 +202,6 @@ void HDT::toDot()
 
 void HDT::updateCounters()
 {
-	INC_RUNTIME_COUNTER
 	if (this->convertedFrom == C && this->left == NULL && this->right == NULL)
 	{
 		handleLeaf();
@@ -252,31 +226,21 @@ void HDT::updateCounters()
 	{
 		handleG();
 	}
-#ifdef beParanoid
-	else
-	{
-		cout << "Didn't expect this type combination..." << endl;
-		exit(-1);
-	}
-#endif
 	up2date = true;
 }
 
 INTTYPE_REST HDT::getResolvedTriplets()
 {
-	INC_RUNTIME_COUNTER
 	return tripResolved;
 }
 
 INTTYPE_REST HDT::getUnresolvedTriplets()
 {
-	INC_RUNTIME_COUNTER
 	return tripUnresolved;
 }
 
 HDT* HDT::constructHDT(RootedTree *t, int numD, HDTFactory *copyStuffFromFactory, bool doLink)
 {
-	INC_RUNTIME_COUNTER
 	HDTFactory *factory = new HDTFactory(numD, copyStuffFromFactory);
 	HDT *hdt = preFirstRound(t, numD, doLink, factory);
 	while(hdt->children != NULL)
@@ -298,7 +262,6 @@ HDT* HDT::constructHDT(RootedTree *t, int numD, HDTFactory *copyStuffFromFactory
 
 HDT* HDT::preFirstRound(RootedTree *t, int numD, bool doLink, HDTFactory *factory)
 {
-	INC_RUNTIME_COUNTER
 	if (t->isLeaf())
 	{
 		HDT *hdt;
@@ -325,7 +288,6 @@ HDT* HDT::preFirstRound(RootedTree *t, int numD, bool doLink, HDTFactory *factor
 
 HDT* HDT::round(HDTFactory *factory)
 {
-	INC_RUNTIME_COUNTER
 	// NOTE: C -> G when parent I etc is moved down!!
 
 	// Composition 3: If we're a C we only have 1 child.
@@ -361,7 +323,6 @@ HDT* HDT::round(HDTFactory *factory)
 	TemplatedLinkedList<HDT*> *prevChild = NULL;
 	for(TemplatedLinkedList<HDT*> *i = children; i != NULL; i = i->next)
 	{
-		INC_RUNTIME_COUNTER
 		// In each round we first transform all downwards closed C componenets
 		// being children of I componenets into G componenets
 		if (i->data->type == C && type == I && i->data->isDownwardsClosed())
@@ -423,7 +384,6 @@ HDT* HDT::round(HDTFactory *factory)
 		newC->right->parent = newC;
 		for(TemplatedLinkedList<HDT*> *i = children; i != NULL; i = i->next)
 		{
-			INC_RUNTIME_COUNTER
 			if (i->data != lastG->data)
 			{
 				ADD_CHILD(newC, i->data);
@@ -438,7 +398,6 @@ HDT* HDT::round(HDTFactory *factory)
 
 bool HDT::isDownwardsClosed()
 {
-	INC_RUNTIME_COUNTER
 	return children == NULL;
 }
 

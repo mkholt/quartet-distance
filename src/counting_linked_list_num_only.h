@@ -13,11 +13,6 @@ class CountingLinkedListNumOnly
 		NodeType type;
 		CountingLinkedListNumOnly *next, *iterator;
 
-		CountingLinkedListNumOnly()
-		{
-			INC_RUNTIME_COUNTER
-		}
-
 		void initialize()
 		{
 			next = NULL;
@@ -25,28 +20,23 @@ class CountingLinkedListNumOnly
 
 		void resetIterator()
 		{
-			INC_RUNTIME_COUNTER
 			iterator = this;
 		}
 
 		unsigned int getIteratorNum()
 		{
-			INC_RUNTIME_COUNTER
 			return iterator->num;
 		}
 
 		bool iteratorHasEnded()
 		{
-			INC_RUNTIME_COUNTER
 			return iterator == NULL || iterator->type == SkipAndEnd;
 		}
 
 		INTTYPE_REST getIteratorValue(unsigned int j)
 		{
-			INC_RUNTIME_COUNTER
 			while (!iteratorHasEnded() && iterator->num < j)
 			{
-				INC_RUNTIME_COUNTER
 				if (iterator->type == End) iterator = NULL;
 				else iterator = iterator->next;
 			}

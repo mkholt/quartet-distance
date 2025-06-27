@@ -12,10 +12,6 @@ class HDTFactory; // forward declaration
 class CountingLinkedList; // forward declaration
 class CountingLinkedListNumOnly; // forward declaration
 
-#ifdef _DEBUG
-	#include "nvwa/debug_new.h"
-#endif
-
 #define INITIALIZE_PAREN_AND_SET_LIST(N_NAME, RESET_NAME) {	\
 	if (parent->N_NAME == NULL)								\
 	{														\
@@ -42,8 +38,7 @@ using namespace std;
 class HDT
 {
 	public:
-		enum NodeType {/*L,*/ I, C, G, NotConverted};
-		HDT();
+		enum NodeType {I, C, G, NotConverted};
 		void initialize(CountingLinkedList *countingVars, NodeType type, int numD, RootedTree *link = NULL, bool doLink = true);
 		static HDT* constructHDT(RootedTree *t, int numD, HDTFactory *copyStuffFromFactory, bool doLink = true);
 
@@ -70,19 +65,8 @@ class HDT
 		// Summing agreeing/disagreing resolved quartets
 		INTTYPE_N4 quartResolvedAgree;
 		INTTYPE_N4 quartResolvedAgreeDiag;
-#ifndef calcE
-		INTTYPE_N4 quartResolvedDisagree;
-		INTTYPE_N4 quartResolvedDisagreeDiag;
-#else
 		INTTYPE_N4 quartSumE;
-#endif
-
-#ifdef quartetsNoSwap
 		INTTYPE_N4 quartResolvedAgreeUpper;
-#ifndef calcE
-		INTTYPE_N4 quartResolvedDisagreeUpper;
-#endif
-#endif
 #endif
 
 	private:
@@ -115,24 +99,6 @@ class HDT
 		// Added by us
 		INTTYPE_REST n_circ_arrow_square_square;
 
-#ifndef calcE
-		// Figure 15
-		INTTYPE_REST n_paren_circ_paren_circ_square;
-
-		// Figure 15 sums
-		INTTYPE_REST n_bracket_circ_paren_circ_square;
-		INTTYPE_REST n_circ_paren_circ_square;
-		INTTYPE_REST n_circ_arrow_circ_square;
-		INTTYPE_REST n_paren_circ_square_arrow_circ;
-		//INTTYPE_REST n_paren_circ_arrow_circ_arrow_square;
-
-		// Added by us
-		INTTYPE_REST n_circ_arrow_paren_circ_square;
-		INTTYPE_REST n_circ_arrow_circ_arrow_square;
-		INTTYPE_REST n_circ_arrow_square_arrow_circ;
-#endif
-
-#ifdef quartetsNoSwap
 		// Added by us for filling out tables
 		INTTYPE_REST n_bracket_circ_circ;
 		INTTYPE_REST n_paren_circ_paren_square_square;
@@ -141,8 +107,6 @@ class HDT
 		INTTYPE_REST n_paren_circ_circ_arrow_square;
 		INTTYPE_REST n_bracket_circ_paren_square_square;
 		INTTYPE_REST n_circ_arrow_square_arrow_square;
-#endif
-#ifdef calcE
 		// New counters for calculating E
 		INTTYPE_REST n_circ_square_triangle;
 		INTTYPE_REST n_circ_square_arrow_triangle;
@@ -156,7 +120,6 @@ class HDT
 		INTTYPE_REST n_paren_0_circ_square;
 		INTTYPE_REST n_bracket_circ_square_triangle;
 		INTTYPE_REST n_bracket_0_circ_square;
-#endif
 #endif
 
 		// Summing resolved/resolved and unresolved/unresolved
@@ -179,11 +142,7 @@ class HDT
 		
 #ifdef quartetsToo
 		bool gotoIteratorValueForList(CountingLinkedList *list, unsigned int num);
-		enum AddToType {i_j, paren_i_j
-#ifdef quartetsNoSwap
-			, j_arrow_i, i_arrow_j, i_paren_i_j, paren_i_paren_i_j, bracket_i_paren_i_j
-#endif
-		};
+		enum AddToType {i_j, paren_i_j, j_arrow_i, i_arrow_j, i_paren_i_j, paren_i_paren_i_j, bracket_i_paren_i_j};
 		INTTYPE_REST getIteratorValueForNumList(CountingLinkedListNumOnly *list, unsigned int num);
 		bool gotoIteratorValueForNumList(CountingLinkedListNumOnly *list, unsigned int num);
 		bool hasIteratorForNumListEnded(CountingLinkedListNumOnly *list);
