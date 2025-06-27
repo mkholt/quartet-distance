@@ -1,16 +1,18 @@
 # Phylogenetic Tree Distance Calculator
 
-A streamlined C++ implementation for calculating triplet and quartet distances between phylogenetic trees using the efficient Soda13 algorithm with Heavy-light Decomposition Trees (HDT).
+A streamlined C++ implementation for calculating triplet and quartet distances between phylogenetic trees, based on the master's thesis by Jens Johansen and Morten Kragelund Holt (2013) from Aarhus University.
 
 ## Overview
 
-This tool compares phylogenetic trees by computing distances based on triplets (sets of 3 leaves) and quartets (sets of 4 leaves). It implements the optimized Soda13 algorithm with Heavy-light Decomposition Trees (HDT) for efficient distance calculations on large phylogenetic trees.
+This tool compares phylogenetic trees by computing distances based on triplets (sets of 3 leaves) and quartets (sets of 4 leaves). It implements the optimized algorithms from Brodal et al. using Hierarchical Decomposition Trees (HDT) with novel improvements developed as part of the original thesis research, presented here in a simplified interface for practical use.
 
 ## Features
 
-- **Triplet Distance Calculation**: Compare trees based on resolved and unresolved triplets
-- **Quartet Distance Calculation**: Compare trees based on resolved and unresolved quartets (compile-time option)
-- **Optimized Algorithm**: Uses the Soda13 algorithm with HDT for efficient computation
+- **Triplet Distance Calculation**: Compare rooted trees based on resolved and unresolved triplets
+- **Quartet Distance Calculation**: Compare unrooted trees based on resolved and unresolved quartets (compile-time option)
+- **Optimized Algorithm**: Uses Brodal et al. algorithms with HDT for efficient computation
+- **Algorithmic Improvements**: Includes thesis improvements like O(min(d₁,d₂)·n·lg n) quartet complexity
+- **Arbitrary Degree Trees**: Support for both binary and non-binary trees  
 - **Tree Visualization**: Export trees and HDT structures in DOT format for graphical visualization
 - **Newick Format Support**: Parse phylogenetic trees in standard Newick format
 - **Simplified Interface**: Streamlined command-line interface focused on core functionality
@@ -107,15 +109,22 @@ Trees should be provided in standard Newick format:
 
 ## Algorithm Details
 
-### Soda13 Algorithm with HDT
+### Brodal et al. Algorithm with HDT
 
-This implementation uses the optimized Soda13 algorithm with Heavy-light Decomposition Trees (HDT) for efficient computation:
-- Based on the algorithm from Soda et al. (2013)
-- Uses dynamic programming on tree decompositions to avoid explicit enumeration
-- Efficiently handles both resolved and unresolved triplets/quartets
-- Suitable for trees of all sizes, with significant performance gains on larger trees
-- Time complexity: O(n log n) preprocessing + O(n²) counting
+This implementation uses the optimized algorithms from Brodal et al. with Hierarchical Decomposition Trees (HDT) and includes novel improvements from the thesis:
+- Based on the algorithms from Brodal et al. (2013) with thesis enhancements
+- Uses dynamic programming on locally balanced tree decompositions 
+- Efficiently handles both resolved and unresolved triplets/quartets on arbitrary degree trees
+- **Triplet Distance**: O(n·lg n) time complexity
+- **Quartet Distance**: Improved from O(max(d₁,d₂)·n·lg n) to O(min(d₁,d₂)·n·lg n)
 - Includes extract-and-contract optimizations for further performance improvements
+- Memory optimizations through improved calculation methods (A,E instead of A,B)
+
+### Key Thesis Contributions
+- First practical implementation achieving O(n·lg n) triplet distance for arbitrary degree trees
+- Novel asymptotic improvement for quartet distance calculation
+- Demonstrated feasibility for large-scale trees (1M+ leaves)
+- Significant memory usage optimizations
 
 ## Project Structure
 
@@ -133,17 +142,19 @@ This implementation uses the optimized Soda13 algorithm with Heavy-light Decompo
 
 ### Key Components
 
-- `Soda13Impl.cpp` - Soda13 algorithm implementation
-- `HDT.cpp` - Heavy-light Decomposition Tree implementation  
+- `Soda13Impl.cpp` - Optimized algorithm implementation with thesis improvements
+- `HDT.cpp` - Hierarchical Decomposition Tree implementation  
 - `HDT*.cpp` - HDT counting and transformation modules
 - `NewickParser.cpp` - Newick format parser
-- `RootedTree.cpp`, `UnrootedTree.h` - Tree data structures
-- `RootedTreeFactory.cpp`, `HDTFactory.cpp` - Memory management
+- `RootedTree.cpp`, `UnrootedTree.h` - Tree data structures for arbitrary degree trees
+- `RootedTreeFactory.cpp`, `HDTFactory.cpp` - Memory-efficient tree construction
 
 ## Performance Notes
 
-- Uses the efficient Soda13 algorithm for all tree sizes
-- Memory usage scales with tree size; HDT representation provides memory efficiency
+- Uses the efficient Brodal et al. algorithms with thesis improvements for all tree sizes
+- **Scalability**: Successfully handles trees with 1,000,000+ leaves (demonstrated in thesis)
+- **Memory efficiency**: HDT representation with optimizations provides practical memory usage
+- **Runtime performance**: ~1 minute 45 seconds for quartet distance on 1M leaf binary trees
 - Extract-and-contract optimizations are enabled by default for better performance
 - 128-bit integer support is enabled by default for handling very large counts
 
@@ -173,9 +184,13 @@ make QUARTETS=1
 
 ## References
 
-This implementation is based on the algorithm described in:
-- Soda et al. (2013) - Efficient algorithms for computing triplet and quartet distances
+This implementation is based on and extends the algorithms described in:
 
-It was developed as part of the thesis work for:
-- Johansen and Holt (2013) - Computing Triplet and Quartet Distances (see [thesis.pdf](thesis.pdf))
+- **Brodal, G. S., Fagerberg, R., Mailund, M., Pedersen, C. N. S., and Sand, A.** (2013). "Efficient algorithms for computing the triplet and quartet distance between trees of arbitrary degree." In SODA, pages 1814–1832. SIAM.
+
+The implementation was developed as part of the master's thesis:
+
+- **Johansen, J. and Holt, M. K.** (2013). "Computing Triplet and Quartet Distances." Master's Thesis, Computer Science, Aarhus University. Advisor: Gerth Stølting Brodal.
+
+This simplified branch presents the core thesis algorithms in a streamlined interface while maintaining the key theoretical and practical improvements developed in the original research. The complete thesis document is available as [thesis.pdf](thesis.pdf) in this repository.
 
